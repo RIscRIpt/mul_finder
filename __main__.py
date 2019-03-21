@@ -36,7 +36,7 @@ def mul_result(n):
             next_n *= digit
         n = next_n
         steps.append(n)
-    return (len(steps), steps)
+    return (len(steps) - 1, steps)
 
 def find_mul_with_result(n):
     if n < 10:
@@ -81,5 +81,6 @@ def do(n):
         do(mul)
 
 if __name__ == "__main__":
-    for i in range(0, 1000):
+    for i in range(4996238671873, 5996238671873):
+        print(i)
         do(i)
