@@ -40,10 +40,12 @@ def mul_result(n):
 
 def find_mul_with_result(n):
     if n < 10:
-        yield 10 + n
-        if n > 1:
-            yield n * 10 + 1
-        # Could yield more 1's, but I decided to stop.
+        p = 10
+        while True:
+            yield p + n
+            if n > 1:
+                yield n * p + 1
+            p *= 10
     else:
         n_len = len(str(n))
         factors = factorize_into_digits(n)
@@ -81,6 +83,6 @@ def do(n):
         do(mul)
 
 if __name__ == "__main__":
-    for i in range(4996238671873, 5996238671873):
-        print(i)
+    for i in itertools.count():
+        i += 10
         do(i)
