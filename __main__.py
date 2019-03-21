@@ -4,14 +4,18 @@ import more_itertools
 def factorize_into_digits(n):
     primes = [2, 3, 5, 7]
     factors = []
+    target = n
     for prime in primes:
         while n % prime == 0:
             n //= prime
             factors.append(prime)
-        if n == 0:
-            raise ValueError("n == 0")
-        elif n == 1:
+        if n == 1:
             break
+    result = 1
+    for factor in factors:
+        result *= factor
+    if result != target:
+        return []
     return factors
 
 def yield_numbers_from(factors):
@@ -71,42 +75,11 @@ def do(n):
     checked.add(n)
     for mul in find_mul_with_result(n):
         result = mul_result(mul)
-        if result[0] > 5:
-            print(mul, result)
-        if result[0] > 10:
+        print(result)
+        if result[0] > 11:
             input()
         do(mul)
 
-for i in range(0, 10):
-    do(i)
-
-# 1: 0, 1, 2, 3, 4
-# 2: (0, 0), (0, 1), (0, 2) .., (3, 4), (4, 1) .. (4, 3), (4, 4)
-
-
-
-
-
-## Second attempt
-# 1 [1, 1]
-# 11 [1, 11]
-
-# 2 [1, 2] / [2, 1]
-# 12 [2, 2, 3] / [2, 6] / [6, 2] / [4, 3]
-# 322
-
-# [2, 3, 4, 5]
-
-
-
-## First attempt
-#4 : [2, 2]
-#22 : [2, 11]
-
-#7 : [1, 7]
-#17 : [1, 17]
-
-#0 : [X, 0]
-#10 : [2, 5]
-#25 : [5, 5]
-#55 : [5, 11]
+if __name__ == "__main__":
+    for i in range(0, 1000):
+        do(i)
