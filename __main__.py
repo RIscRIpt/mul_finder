@@ -1,3 +1,4 @@
+import math
 import itertools
 import more_itertools
 
@@ -47,22 +48,21 @@ def find_mul_with_result(n):
                 yield n * p + 1
             p *= 10
     else:
-        n_len = len(str(n))
         factors = factorize_into_digits(n)
         if len(factors) == 0:
             return
-        for r in range(n_len, len(factors) + 1):
+        for r in range(math.ceil(n ** (1/7)), len(factors) + 1):
             if r == len(factors):
                 yield from yield_numbers_from(factors)
             else:
-                combination_len = len(factors) - r
+                mul_comb_len = len(factors) - r
                 yielded_factors = set()
-                for combination in itertools.combinations(set(factors), combination_len):
+                for mul_comb in set(itertools.combinations(factors, mul_comb_len)):
                     new_factors = factors.copy()
-                    for value in combination:
+                    for value in mul_comb:
                         new_factors.remove(value)
-                    for mul_list in itertools.permutations(range(len(new_factors)), combination_len):
-                        multiplied_factors = multiply_lists(new_factors, combination, mul_list)
+                    for mul_list in itertools.product(range(len(new_factors)), repeat=len(mul_comb)):
+                        multiplied_factors = multiply_lists(new_factors, mul_comb, mul_list)
                         fz_multiplied_factors = frozenset(multiplied_factors)
                         if fz_multiplied_factors not in yielded_factors:
                             yielded_factors.add(fz_multiplied_factors)
